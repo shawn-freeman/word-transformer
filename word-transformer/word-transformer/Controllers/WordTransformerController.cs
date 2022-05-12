@@ -51,12 +51,14 @@ namespace word_transformer.Controllers
                 {
                     retry++;
                     if (retry == maxRetry) return BadRequest("Threshold Reached");
-                    Console.WriteLine($"DictionaryLength:{dictionary.Count()} | RetryCount:{retry.ToString()}");
                 }
+
+                Console.WriteLine($"DictionaryLength:{dictionary.Count()} | RetryCount:{retry.ToString()}");
             }
 
             //output total processing time to console
             var totalTime = DateTime.Now - startTime;
+            Console.WriteLine();
             Console.WriteLine(totalTime);
 
             return Ok(dictionary.Values.Aggregate((agg, val) => agg += $", {val}"));
