@@ -30,7 +30,7 @@ namespace word_transformer.Controllers
             while (currentStep < steps)
             {
                 //determine word to add
-                var index = Convert.ToInt32(Math.Floor(random.NextDouble() * dictionary.Keys.Count()) );
+                var index = Convert.ToInt64(Math.Floor(random.NextDouble() * dictionary.Keys.Count()) );
                 var sbWord = new StringBuilder(dictionary.First(d => d.Key == index).Value);
 
                 var charIndex = Convert.ToInt32(Math.Floor(random.NextDouble() * sbWord.Length));
