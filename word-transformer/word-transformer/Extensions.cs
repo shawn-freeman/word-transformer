@@ -2,11 +2,11 @@
 {
     public static class Extensions
     {
-        public static Dictionary<long, string> AddWord(this Dictionary<long, string> dictionary, string word)
+        public static Dictionary<string, long> AddWord(this Dictionary<string, long> dictionary, string word)
         {
-            var newKey = dictionary.Keys.Count();
+            var newWordPosition = dictionary.Keys.Count();
             
-            dictionary.Add(newKey, word);
+            dictionary.Add(word, newWordPosition);
             return dictionary;
         }
     }
