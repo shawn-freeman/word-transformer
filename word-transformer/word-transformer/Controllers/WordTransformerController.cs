@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Text;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -23,9 +24,9 @@ namespace word_transformer.Controllers
             //calc the max permutations
             maxRetry = GetMaxPermutations(word1.Length);
 
-            var dictionary = new Dictionary<long, string>();
-            dictionary.AddWord(word1);
-            dictionary.AddWord(word2);
+            var hashSet = new HashSet<string>();
+            hashSet.Add(word1);
+            hashSet.Add(word2);
 
             Random random = new Random();
             var currentStep = 0;
@@ -33,33 +34,23 @@ namespace word_transformer.Controllers
             while (currentStep < steps)
             {
                 //determine word to add
-                var index = Convert.ToInt64(Math.Floor(random.NextDouble() * dictionary.Keys.Count()) );
-                var sbWord = new StringBuilder(dictionary.First(d => d.Key == index).Value);
+                var index = Convert.ToInt64(Math.Floor(random.NextDouble() * hashSet.Count()) );
+                var sbWord = new StringBuilder(hashSet.ToArray()[index]);
 
                 var charIndex = Convert.ToInt32(Math.Floor(random.NextDouble() * sbWord.Length));
 
                 sbWord[charIndex] = characters[Convert.ToInt32(Math.Floor(random.NextDouble() * characters.Length))];
                 var newWord = sbWord.ToString();
 
-                if (!dictionary.ContainsValue(newWord))
-                {
-                    dictionary.AddWord(newWord);
-                    currentStep++;
-                    retry = 0;
-                }
-                else
-                {
-                    retry++;
-                    if (retry == maxRetry) return BadRequest("Threshold Reached");
-                    Console.WriteLine($"DictionaryLength:{dictionary.Count()} | RetryCount:{retry.ToString()}");
-                }
+                hashSet.Add(newWord);
+                currentStep++;
             }
 
             //output total processing time to console
             var totalTime = DateTime.Now - startTime;
             Console.WriteLine(totalTime);
 
-            return Ok(dictionary.Values.Aggregate((agg, val) => agg += $", {val}"));
+            return Ok(hashSet.Aggregate((agg, val) => agg += $", {val}"));
         }
 
         private long GetMaxPermutations(long length)
