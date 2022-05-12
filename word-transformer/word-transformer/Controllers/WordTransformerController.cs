@@ -17,6 +17,8 @@ namespace word_transformer.Controllers
             long maxRetry = 0;
             if (word1.Count() != word2.Count()) return BadRequest("Words are not of equal length.");
 
+            word1 = word1.ToUpper();
+            word2 = word2.ToUpper();
             //calc the max permutations
             maxRetry = GetMaxPermutations(word1.Length);
 
