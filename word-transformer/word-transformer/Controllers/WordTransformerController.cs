@@ -12,7 +12,7 @@ namespace word_transformer.Controllers
         public string characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
         [HttpGet]
-        public IActionResult Get(string word1, string word2, int steps)
+        public IActionResult Get(string word1, string word2, Int64 steps)
         {
             Int64 maxRetry = 0;
             if (word1.Count() != word2.Count()) return BadRequest("Words are not of equal length.");
@@ -20,7 +20,7 @@ namespace word_transformer.Controllers
             //calc the max permutations
             maxRetry = GetMaxPermutations(word1.Length);
 
-            var dictionary = new Dictionary<int, string>();
+            var dictionary = new Dictionary<Int64, string>();
             dictionary.AddWord(word1);
             dictionary.AddWord(word2);
 
@@ -55,7 +55,7 @@ namespace word_transformer.Controllers
             return Ok(dictionary.Values.Aggregate((agg, val) => agg += $", {val}"));
         }
 
-        private Int64 GetMaxPermutations(int length)
+        private Int64 GetMaxPermutations(Int64 length)
         {
             Int64 val = 1;
             for (var i = 1; i <= length; i++ )

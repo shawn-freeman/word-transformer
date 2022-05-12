@@ -2,7 +2,7 @@
 {
     public static class Extensions
     {
-        public static Dictionary<int, string> AddWord(this Dictionary<int, string> dictionary, string word)
+        public static Dictionary<Int64, string> AddWord(this Dictionary<Int64, string> dictionary, string word)
         {
             var newKey = dictionary.Keys.Count();
             
